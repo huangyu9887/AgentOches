@@ -1,0 +1,104 @@
+
+<style>
+.level-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 12px; cursor: pointer; transition: border-color .2s, background .2s; }
+.level-card:hover { border-color: var(--color-border-primary); background: var(--color-background-secondary); }
+.level-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 10px; border-radius: 99px; margin-bottom: 8px; }
+.skill-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.skill-tag { font-size: 12px; padding: 3px 10px; border-radius: 99px; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+.arrow-sep { text-align: center; color: var(--color-text-tertiary); font-size: 18px; margin: 4px 0; line-height: 1; }
+.prompt-btn { font-size: 12px; color: var(--color-text-info); border: none; background: none; cursor: pointer; padding: 0; margin-top: 8px; }
+.prompt-btn:hover { text-decoration: underline; }
+h2.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+
+<h2 class="sr-only">Agent 编排能力升级路线图：从对话到多 Agent 系统的四个阶段</h2>
+
+<div style="padding: 1rem 0 0.5rem">
+
+  <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 16px;">
+    <div style="font-size:14px; font-weight:500; color:var(--color-text-primary)">从对话到编排：四个阶梯</div>
+    <div style="flex:1; height:0.5px; background:var(--color-border-tertiary)"></div>
+  </div>
+
+  <!-- Level 0 -->
+  <div class="level-card" onclick="sendPrompt('你能详细讲讲"结构化提示"阶段吗？给我一些具体例子')">
+    <div class="level-badge" style="background:var(--color-background-secondary); color:var(--color-text-secondary)">现在 · 你在这里</div>
+    <div style="font-size:15px; font-weight:500; color:var(--color-text-primary)">0 → 对话式使用</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); margin-top:4px; line-height:1.6">单轮/多轮问答，每次都重新解释背景，输出格式随缘。</div>
+    <div class="skill-row">
+      <span class="skill-tag">手动粘贴上下文</span>
+      <span class="skill-tag">自然语言指令</span>
+      <span class="skill-tag">输出靠人整理</span>
+    </div>
+    <button class="prompt-btn">了解升级建议 ↗</button>
+  </div>
+
+  <div class="arrow-sep">↓</div>
+
+  <!-- Level 1 -->
+  <div class="level-card" onclick="sendPrompt('能帮我写一个 System Prompt 模板，让 Claude 每次都以固定格式输出分析结果吗？')">
+    <div class="level-badge" style="background:var(--color-background-info); color:var(--color-text-info)">第一步 · 1-2周可掌握</div>
+    <div style="font-size:15px; font-weight:500; color:var(--color-text-primary)">1 → 结构化提示 + System Prompt</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); margin-top:4px; line-height:1.6">把「你是谁、做什么、输出什么格式」固化成 System Prompt，让每次对话有稳定的「人格」和输出结构。</div>
+    <div class="skill-row">
+      <span class="skill-tag">System Prompt 设计</span>
+      <span class="skill-tag">JSON / XML 输出</span>
+      <span class="skill-tag">角色约束</span>
+      <span class="skill-tag">few-shot 示例</span>
+    </div>
+    <button class="prompt-btn">生成一个 System Prompt 模板 ↗</button>
+  </div>
+
+  <div class="arrow-sep">↓</div>
+
+  <!-- Level 2 -->
+  <div class="level-card" onclick="sendPrompt('给我讲讲工具调用（Tool Use / Function Calling）是怎么工作的？从零开始')">
+    <div class="level-badge" style="background:var(--color-background-success); color:var(--color-text-success)">第二步 · 真正的 Agent 起点</div>
+    <div style="font-size:15px; font-weight:500; color:var(--color-text-primary)">2 → Tool Use / Function Calling</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); margin-top:4px; line-height:1.6">给模型定义工具（搜索、读文件、调 API），它自己决定何时调用、用什么参数。你的代码负责执行并把结果还给模型。</div>
+    <div class="skill-row">
+      <span class="skill-tag">Tool 定义（JSON Schema）</span>
+      <span class="skill-tag">ReAct 循环</span>
+      <span class="skill-tag">结果回注</span>
+      <span class="skill-tag">错误处理</span>
+    </div>
+    <button class="prompt-btn">解释 ReAct 循环 ↗</button>
+  </div>
+
+  <div class="arrow-sep">↓</div>
+
+  <!-- Level 3 -->
+  <div class="level-card" onclick="sendPrompt('单 Agent 和多 Agent 编排有什么区别？什么时候需要多 Agent？')">
+    <div class="level-badge" style="background:var(--color-background-warning); color:var(--color-text-warning)">第三步 · 主流工程实践</div>
+    <div style="font-size:15px; font-weight:500; color:var(--color-text-primary)">3 → 单 Agent 工作流</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); margin-top:4px; line-height:1.6">把完整任务分解为「规划 → 执行 → 观察 → 再规划」的循环。用 LangChain / LlamaIndex / 纯代码实现一个能自主跑完整任务的单 agent。</div>
+    <div class="skill-row">
+      <span class="skill-tag">任务拆解</span>
+      <span class="skill-tag">记忆管理</span>
+      <span class="skill-tag">LangChain / LlamaIndex</span>
+      <span class="skill-tag">中间状态持久化</span>
+    </div>
+    <button class="prompt-btn">推荐入门项目 ↗</button>
+  </div>
+
+  <div class="arrow-sep">↓</div>
+
+  <!-- Level 4 -->
+  <div class="level-card" onclick="sendPrompt('推荐一些多 Agent 框架，比如 CrewAI 或 AutoGen，适合从单 Agent 升级过来的开发者')">
+    <div class="level-badge" style="background:var(--color-background-danger); color:var(--color-text-danger)">第四步 · 编排系统</div>
+    <div style="font-size:15px; font-weight:500; color:var(--color-text-primary)">4 → 多 Agent 编排</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); margin-top:4px; line-height:1.6">Orchestrator 负责分配任务，多个专职 sub-agent 并行执行，结果汇总。典型框架：CrewAI、AutoGen、LangGraph。</div>
+    <div class="skill-row">
+      <span class="skill-tag">Orchestrator 模式</span>
+      <span class="skill-tag">CrewAI / AutoGen</span>
+      <span class="skill-tag">并发 + 结果聚合</span>
+      <span class="skill-tag">agent 间通信</span>
+    </div>
+    <button class="prompt-btn">了解多 Agent 框架对比 ↗</button>
+  </div>
+
+  <div style="margin-top:20px; padding: 12px 16px; background:var(--color-background-secondary); border-radius: var(--border-radius-md); border-left: 3px solid var(--color-border-info); font-size:13px; color:var(--color-text-secondary); line-height:1.7">
+    <span style="font-weight:500; color:var(--color-text-primary)">建议策略：</span> 不要跳级。第 2 步（Tool Use）是真正的门槛，跨过去之后第 3、4 步会快很多。点击每张卡片可以继续深入。
+  </div>
+
+</div>
